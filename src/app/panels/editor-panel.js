@@ -4,6 +4,7 @@ var $ = require('jquery')
 
 var Terminal = require('./terminal')
 var Editor = require('../editor/editor')
+var EVMViewer = require('../disas/disas')
 var globalRegistry = require('../../global/registry')
 
 var ContextualListener = require('../editor/contextualListener')
@@ -39,13 +40,16 @@ class EditorPanel {
     }
     self._view = {}
     var editor = new Editor({})
+    var disas = new EVMViewer({})
     self._components.registry.put({api: editor, name: 'editor'})
+    self._components.registry.put({api: disas, name: 'disas'})
 
     var contextualListener = new ContextualListener({editor, pluginManager: self._deps.pluginManager})
     var contextView = new ContextView({contextualListener, editor})
 
     self._components = {
       editor: editor,
+      disas: disas,
       contextualListener: contextualListener,
       contextView: contextView,
       // TODO list of compilers is always empty; should find a path to add plugin compiler here
@@ -131,6 +135,7 @@ class EditorPanel {
     var self = this
     if (self._view.el) return self._view.el
     self._view.editor = self._components.editor.render()
+    self._view.disas = self._components.disas.render()
     self._view.terminal = self._components.terminal.render()
     self._view.content = yo`
       <div class=${css.content}>
@@ -138,7 +143,10 @@ class EditorPanel {
         <div class=${css.contextviewcontainer}>
           ${self._components.contextView.render()}
         </div>
-        ${self._view.editor}
+        <div class=${css.editorsideholder}>
+          ${self._view.editor}
+          ${self._view.disas}
+        </div>
         ${self._view.terminal}
       </div>
     `

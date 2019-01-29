@@ -49,6 +49,7 @@ module.exports = class CompileTab {
     // dependencies
     self._deps = {
       editor: self._components.registry.get('editor').api,
+      disas: self._components.registry.get('disas').api,
       config: self._components.registry.get('config').api,
       renderer: self._components.registry.get('renderer').api,
       swarmfileProvider: self._components.registry.get('fileproviders/swarm').api,
@@ -132,6 +133,7 @@ module.exports = class CompileTab {
         self._view.contractNames.removeAttribute('disabled')
         self._components.compiler.visitContracts(contract => {
           self.data.contractsDetails[contract.name] = parseContracts(contract.name, contract.object, self._components.compiler.getSource(contract.file))
+          self._deps.disas.getBinary(contract, self.data.contractsDetails[contract.name])
           var contractName = yo`<option>${contract.name}</option>`
           self._view.contractNames.appendChild(contractName)
         })

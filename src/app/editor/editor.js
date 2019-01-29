@@ -32,7 +32,7 @@ setTheme((path, theme) => {
 var css = csjs`
   .ace-editor {
     background-color  : ${styles.editor.backgroundColor_Editor};
-    width     : 100%;
+    width     : 50%;
   }
 `
 document.head.appendChild(yo`

@@ -171,6 +171,12 @@ var css = csjs`
     height            : 20px;
     background-color  : ${styles.editor.backgroundColor_Tabs_Highlights};
   }
+  .editorsideholder{
+    width             : 100%;
+    display           : flex;
+    flex-direction    : row;
+    background-color  : ${styles.editor.backgroundColor_Tabs_Highlights};
+  }
 `
 
 module.exports = {
