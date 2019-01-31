@@ -205,10 +205,6 @@ function Disass (opts = {}, localRegistry) {
     return res
   }
 
-  this.convertRanges = function(sourceMap) {
-    let session = this._deps.editor.
-  }
-
   self._deps.fileManager.event.register('currentFileChanged', (path, provider) => {
     console.log('File changed: ', path)
     switchSession(path)
